@@ -20,6 +20,7 @@ public class LevelManager : MonoBehaviour
         medals.untouched = true;
 
         levelName = SceneManager.GetActiveScene().name;
+        UpdateMoney.instance.DisplayScore(0);
     }
 
     public void RegisterEnemy()
@@ -42,7 +43,7 @@ public class LevelManager : MonoBehaviour
     public void AddRescue()
     {
         humanRescued++;
-        score += 75;
+        score += 10;
         UpdateMoney.instance.DisplayScore(score);
     }
 
@@ -67,7 +68,7 @@ public class LevelManager : MonoBehaviour
             medals.rescue = true;
 
         StatsManager.instance.AddMedals(levelName, medals);
-
+        StatsManager.instance.totalscore += score;
         onGameEnd.Invoke();
     }
 }

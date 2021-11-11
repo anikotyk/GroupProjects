@@ -34,7 +34,7 @@ public class UIScreen : MonoBehaviour
 
     public void Hide()
     {
-        StartCoroutine(ModifyAlpha(0f, hideSpeed, ()=> 
+        StartCoroutine(ModifyAlpha(0f, hideSpeed, () =>
         {
             Init(false);
         }));
@@ -43,7 +43,7 @@ public class UIScreen : MonoBehaviour
 
     IEnumerator ModifyAlpha(float alphaTarget, float speed, UnityAction callback = null)
     {
-        while(canvasGroup.alpha != alphaTarget)
+        while (canvasGroup.alpha != alphaTarget)
         {
             canvasGroup.alpha = Mathf.Lerp(canvasGroup.alpha, alphaTarget, speed * Time.deltaTime);
 

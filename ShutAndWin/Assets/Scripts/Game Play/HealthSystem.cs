@@ -7,7 +7,7 @@ public class HealthSystem : MonoBehaviour
     public float maxHealth = 10f;
     public GameObject hitEffect, healthBar;
     public bool isEnemy = true;
-    public int minScore = 25, maxScore = 50;
+    public int minScore = 5, maxScore = 30;
 
     private string tagName = "Bullet";
     private float currentHealth;

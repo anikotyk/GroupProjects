@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System;
 using UnityEngine;
+using System.IO;
 
 public class StatsManager : MonoBehaviour
 {
@@ -9,6 +10,7 @@ public class StatsManager : MonoBehaviour
 
     public int lives = 5;
     public int money;
+    public int totalscore;
 
     [Header("Upgrade Options")]
     public List<ShootProfile> blasterUpgradeList = new List<ShootProfile>();
@@ -27,6 +29,7 @@ public class StatsManager : MonoBehaviour
     //singleton pattern initialization
     private void Awake()
     {
+        
         if (instance == null)
         {
             instance = this;
@@ -40,9 +43,23 @@ public class StatsManager : MonoBehaviour
 
     // Use this for initialization
     void Start () {
-		
-	}
-	
+        if (File.Exists(Application.persistentDataPath + "/savegame.dat"))
+        {
+            LoadProgress();
+        }
+        else
+        {
+            money = 100;
+            totalscore = 0;
+        }
+        UpdateMoney.instance.DisplayScore(totalscore);
+    }
+
+    private void OnDestroy()
+    {
+        SaveProgress();
+    }
+
     public void AddMoney(int value)
     {
         money += value;
@@ -97,6 +114,7 @@ public class StatsManager : MonoBehaviour
 
         saveData.lives = lives;
         saveData.money = money;
+        saveData.totalscore = totalscore;
 
         saveData.achievementList = achievementList;
         saveData.statsTimer = statsTimer;
@@ -112,6 +130,7 @@ public class StatsManager : MonoBehaviour
 
         lives = loadData.lives;
         money = loadData.money;
+        totalscore = loadData.totalscore;
 
         achievementList = loadData.achievementList;
         statsTimer = loadData.statsTimer;
@@ -188,6 +207,7 @@ public class SaveData
 {
     public int lives;
     public int money;
+    public int totalscore;
     public Dictionary<string, Medals> achievementList = new Dictionary<string, Medals>();
     public Dictionary<string, DateTime> statsTimer = new Dictionary<string, DateTime>();
     public List<StatsUpgradeInfo> stats = new List<StatsUpgradeInfo>();

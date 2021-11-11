@@ -11,6 +11,10 @@ public class PlayerMovement : MonoBehaviour
     private float distance;
     private Vector3 velocity, lastPosition, rotation, touchPos, screenToWorld;
 
+    [SerializeField]
+    private Transform activator;
+    [SerializeField]
+    private AutoMove movingspeedcontroller;
 	// Use this for initialization
 	void Start ()
     {
@@ -28,7 +32,22 @@ public class PlayerMovement : MonoBehaviour
         Move();
 
         lastPosition = transform.position;
+        
 	}
+
+    void ChangeTime(bool fast)
+    {
+        
+        if (fast)
+        {
+            movingspeedcontroller.ChangeTimeCoef(0.25f);
+        }
+        else
+        {
+            movingspeedcontroller.ChangeTimeCoef(1f);
+        }
+
+    }
 
     void Move()
     {
@@ -38,6 +57,7 @@ public class PlayerMovement : MonoBehaviour
         touchPos = Input.touchCount > 0 ? Input.GetTouch(0).position : (Vector2)touchPos;
 #endif
         touchPos.z = distance;
+        ChangeTime(activator.position.z - transform.position.z <= 5);
 
         screenToWorld = cam.ScreenToWorldPoint(touchPos);
 

@@ -10,13 +10,13 @@ public class UIManager : MonoBehaviour
 
     private bool isChanging;
 
-	// Use this for initialization
-	void Start ()
+    // Use this for initialization
+    void Start()
     {
         screenArray = GetComponentsInChildren<UIScreen>(true);
 
         Init(0);
-	}
+    }
 
     void Init(int defaultUI)
     {

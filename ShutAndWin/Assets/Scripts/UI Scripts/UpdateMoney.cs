@@ -18,6 +18,7 @@ public class UpdateMoney : MonoBehaviour
     private void Start()
     {
         DisplayMoney(StatsManager.instance.money);
+        UpdateMoney.instance.DisplayScore(StatsManager.instance.totalscore);
     }
 
     public void DisplayMoney(int value)
@@ -36,4 +37,5 @@ public class UpdateMoney : MonoBehaviour
         if (scoreDisplay)
             scoreDisplay.text = value.ToString("00000000");
     }
+    
 }
