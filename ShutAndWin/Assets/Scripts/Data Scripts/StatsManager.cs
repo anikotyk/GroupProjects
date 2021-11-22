@@ -29,7 +29,6 @@ public class StatsManager : MonoBehaviour
     //singleton pattern initialization
     private void Awake()
     {
-        
         if (instance == null)
         {
             instance = this;
@@ -45,7 +44,7 @@ public class StatsManager : MonoBehaviour
     void Start () {
         if (File.Exists(Application.persistentDataPath + "/savegame.dat"))
         {
-            LoadProgress();
+            LoadProgress(SaveSystem.Load<SaveData>());
         }
         else
         {
@@ -58,6 +57,7 @@ public class StatsManager : MonoBehaviour
     private void OnDestroy()
     {
         SaveProgress();
+
     }
 
     public void AddMoney(int value)
@@ -110,6 +110,17 @@ public class StatsManager : MonoBehaviour
 
     public void SaveProgress()
     {
+        SaveSystem.Save(CreateSaveDataObject());
+        GameObject.FindObjectOfType<GooglePlayServicesManager>().OpenCloudToSaveOrLoad(true);
+    }
+
+    public string CreateJsonData()
+    {
+        return JsonUtility.ToJson(CreateSaveDataObject());
+    }
+
+    public SaveData CreateSaveDataObject()
+    {
         SaveData saveData = new SaveData();
 
         saveData.lives = lives;
@@ -120,14 +131,11 @@ public class StatsManager : MonoBehaviour
         saveData.statsTimer = statsTimer;
 
         saveData.stats = stats;
-
-        SaveSystem.Save(saveData);
+        return saveData;
     }
 
-    public void LoadProgress()
+    public void LoadProgress(SaveData loadData)
     {
-        SaveData loadData = SaveSystem.Load<SaveData>();
-
         lives = loadData.lives;
         money = loadData.money;
         totalscore = loadData.totalscore;
@@ -154,6 +162,9 @@ public class StatsManager : MonoBehaviour
         {
             levelMenus[i].UpdateMenu();
         }
+
+        UpdateMoney.instance.UpdateMoneyDisplay();
+        UpdateMoney.instance.DisplayScore(StatsManager.instance.totalscore);
     }
 
     public void AddMedals(string levelName, Medals medal)

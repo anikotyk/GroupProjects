@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class UpdateMoney : MonoBehaviour
@@ -34,8 +35,13 @@ public class UpdateMoney : MonoBehaviour
 
     public void DisplayScore(int value)
     {
+        string text = value.ToString("00000000");
+        if (SceneManager.GetActiveScene().name == "Menu")
+        {
+            text = "score: " + value;
+        }
         if (scoreDisplay)
-            scoreDisplay.text = value.ToString("00000000");
+            scoreDisplay.text = text;
     }
     
 }

@@ -1,11 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class LevelMenu : MonoBehaviour
 {
-    public string sceneTarget;
+    public string sceneTarget="Gameplay";
 
     public Button playButton;
     public Text killText, rescueText, untouchedText;
@@ -46,6 +47,8 @@ public class LevelMenu : MonoBehaviour
 
     void GoToLevel()
     {
+        
         SceneLoader.instance.ChangeScene(sceneTarget);
+        
     }
 }

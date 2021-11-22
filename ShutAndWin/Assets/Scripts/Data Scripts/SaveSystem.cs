@@ -10,27 +10,36 @@ public static class SaveSystem
         FileStream file = new FileStream(Application.persistentDataPath + "/savegame.dat", FileMode.Create);
         bf.Serialize(file, saveData);
         file.Close();
-        Debug.Log("Save Success!");
     }
 
-    public static T Load<T>()
+    public static T Load<T>(bool isLoadingFromFile=true, string data="")
     {
-        if (File.Exists(Application.persistentDataPath + "/savegame.dat"))
+        if (isLoadingFromFile)
         {
-            BinaryFormatter bf = new BinaryFormatter();
-            FileStream file = new FileStream(Application.persistentDataPath + "/savegame.dat", FileMode.Open);
-
-            Debug.Log("Load Success!");
-
-            T loaded = (T)bf.Deserialize(file);
-            file.Close();
-            return loaded;
+            if (File.Exists(Application.persistentDataPath + "/savegame.dat"))
+            {
+                BinaryFormatter bf = new BinaryFormatter();
+                FileStream file = new FileStream(Application.persistentDataPath + "/savegame.dat", FileMode.Open);
+                T loaded = (T)bf.Deserialize(file);
+                file.Close();
+                return loaded;
+            }
+            else
+            {
+                Debug.LogError("Save file not found!");
+            }
         }
         else
         {
-            Debug.LogError("Save file not found!");
+            if (data != "")
+            {
+                return JsonUtility.FromJson<T>(data);
+            }
         }
+       
 
         return default(T);
     }
+
+ 
 }

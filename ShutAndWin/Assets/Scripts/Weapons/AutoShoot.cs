@@ -12,12 +12,15 @@ public class AutoShoot : MonoBehaviour
     private WaitForSeconds rate, interval;
 
 	// Use this for initialization
+
+
 	private void OnEnable ()
     {
         SetIntervalValue();
 
-        if (firePoint == null)
+        if (!firePoint)
             firePoint = transform;
+        Debug.Log(firePoint);
 
         StartCoroutine(ShootingSequence());
     }

@@ -11,6 +11,6 @@ public class DebugScript : MonoBehaviour
 
     public void Load()
     {
-        StatsManager.instance.LoadProgress();
+        StatsManager.instance.LoadProgress(SaveSystem.Load<SaveData>());
     }
 }

@@ -62,12 +62,9 @@ public class UpgradeItem : MonoBehaviour
                 //start the coroutine
                 StartCoroutine(DoUpgrade());
             });
-            //Debug.Log("Upgrading " + statName);
         }
         else
         {
-            //show message not enough money
-            //Debug.Log("Not Enough Money");
             DialogManager.instance.ShowMessage("You don't have enough money to upgrade " + statName);
         }
     }

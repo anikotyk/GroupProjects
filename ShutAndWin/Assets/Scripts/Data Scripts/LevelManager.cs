@@ -12,6 +12,8 @@ public class LevelManager : MonoBehaviour
 
     public UnityEvent onGameEnd;
 
+    public GameObject OnGameover;
+    public GameObject onGameWin;
     private string levelName;
 
     private void Awake()
@@ -20,6 +22,10 @@ public class LevelManager : MonoBehaviour
         medals.untouched = true;
 
         levelName = SceneManager.GetActiveScene().name;
+        
+    }
+    private void Start()
+    {
         UpdateMoney.instance.DisplayScore(0);
     }
 
@@ -43,7 +49,7 @@ public class LevelManager : MonoBehaviour
     public void AddRescue()
     {
         humanRescued++;
-        score += 10;
+        score += 3;
         UpdateMoney.instance.DisplayScore(score);
     }
 
@@ -55,6 +61,14 @@ public class LevelManager : MonoBehaviour
     public void GameEnd()
     {
         StartCoroutine(CountDelay());
+    }
+
+    public void GameOver()
+    {
+        //StartCoroutine(CountDelay());
+        OnGameover.SetActive(true);
+        onGameWin.SetActive(false);
+        onGameEnd.Invoke();
     }
 
     IEnumerator CountDelay()
@@ -69,7 +83,33 @@ public class LevelManager : MonoBehaviour
 
         StatsManager.instance.AddMedals(levelName, medals);
         StatsManager.instance.totalscore += score;
+        GooglePlayServicesManager.instance.PostScoreToLeaderboard(StatsManager.instance.totalscore);
+        AchivmentCheck();
         onGameEnd.Invoke();
+    }
+
+    public void AchivmentCheck()
+    {
+        if (StatsManager.instance.totalscore >= 1000000)
+        {
+            GooglePlayServicesManager.instance.AchievementCompleted(GooglePlayServicesManager.instance.achivment5);
+        }else if (StatsManager.instance.totalscore >= 100000)
+        {
+            GooglePlayServicesManager.instance.AchievementCompleted(GooglePlayServicesManager.instance.achivment4);
+        }
+        else if (StatsManager.instance.totalscore >= 10000)
+        {
+            GooglePlayServicesManager.instance.AchievementCompleted(GooglePlayServicesManager.instance.achivment3);
+        }
+        else if (StatsManager.instance.totalscore >= 1000)
+        {
+            GooglePlayServicesManager.instance.AchievementCompleted(GooglePlayServicesManager.instance.achivment2);
+        }
+        else if (StatsManager.instance.totalscore >= 100)
+        {
+            GooglePlayServicesManager.instance.AchievementCompleted(GooglePlayServicesManager.instance.achivment1);
+        }
+        
     }
 }
 

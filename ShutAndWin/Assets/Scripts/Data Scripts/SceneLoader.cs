@@ -14,6 +14,7 @@ public class SceneLoader : MonoBehaviour {
 
     private void Awake()
     {
+
         if (instance == null)
         {
             instance = this;
@@ -27,7 +28,7 @@ public class SceneLoader : MonoBehaviour {
         DisablePanel();
     }
 
-    void DisablePanel()
+    public void DisablePanel()
     {
         panel.SetActive(false);
     }
@@ -53,6 +54,8 @@ public class SceneLoader : MonoBehaviour {
 
         DisablePanel();
     }
+
+    
 
     public void ChangeScene(string sceneName)
     {

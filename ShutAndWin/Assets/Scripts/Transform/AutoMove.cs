@@ -90,7 +90,6 @@ public class AutoMove : MonoBehaviour
         for(int i=0; i < cnt; i++) {
             timecoef += 0.1f;
             yield return time1;
-            Debug.Log("Slowing");
         }
         StopCoroutine(Moving);
     }
@@ -104,7 +103,6 @@ public class AutoMove : MonoBehaviour
         {
             timecoef -= 0.1f;
             yield return time1;
-            Debug.Log("Fasting");
         }
         timecoef = 1f;
         isStoping = false;

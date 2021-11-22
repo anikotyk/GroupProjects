@@ -7,7 +7,7 @@ public class HealthSystem : MonoBehaviour
     public float maxHealth = 10f;
     public GameObject hitEffect, healthBar;
     public bool isEnemy = true;
-    public int minScore = 5, maxScore = 30;
+    public int minScore = 3, maxScore = 10;
 
     private string tagName = "Bullet";
     private float currentHealth;
@@ -40,6 +40,10 @@ public class HealthSystem : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        if (!transform.GetComponent<Collider>().enabled)
+        {
+            return;
+        }
         if (other.CompareTag(tagName))
         {
             //do damage here
@@ -82,6 +86,7 @@ public class HealthSystem : MonoBehaviour
 
             if (isEnemy && !dead)
             {
+                //Debug.Log("DIED" + transform.gameObject.name);
                 dead = true;
                 gameObject.tag = "Untagged";
                 LevelManager.instance.AddEnemyKill(Random.Range(minScore, maxScore));
